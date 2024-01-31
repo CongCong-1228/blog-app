@@ -2,37 +2,39 @@
 
 import '@/styles/header/index.css'
 import { NavBarType } from '@/types/header'
-import { usePathname, useRouter } from 'next/navigation'
-
+import { usePathname } from 'next/navigation'
+import ProgressBar from '@/components/progressBar'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 export default function Header() {
     const pathName = usePathname()
-    const router = useRouter()
+
 
 
     function NavBarList(): React.ReactNode {
         const navBarMap: Array<NavBarType> = [
             { name: 'HOME', icon: 'HOME', href: '/' },
             { name: 'ARCHIVES', icon: 'ARCHIVES', href: '/archives' },
-            { name: 'ABOUT', icon: 'ABOUT', href: 'about' }
+            { name: 'ABOUT', icon: 'ABOUT', href: '/about' }
         ]
         const handleClickNav = (item: NavBarType) => {
             console.log('route', pathName)
             if (pathName === item.href) {
-                return
-            } else {
-                router.push(item.href)
+                return false
             }
         }
 
         return navBarMap.map((item: NavBarType) => {
             const isActive: Boolean = pathName === item.href
-            return <li key={item.name} onClick={() => handleClickNav(item)} className={` ${isActive ? "text-navBarActive" : ""} group relative text-xl font-medium cursor-pointer hover:text-navBarActive`}>
+            return <Link href={item.href} key={item.name} onClick={() => handleClickNav(item)} className={` ${isActive ? "text-navBarActive" : ""} group relative text-xl font-medium cursor-pointer hover:text-navBarActive`}>
                 <div className={` ${isActive ? "after:block" : "after:hidden"} after:absolute after:h-[2px] after:w-full after:bottom-[-5px]  after:bg-navBarActive group-hover:after:block`}>{item.name}</div>
-            </li>
+            </Link>
         })
     }
 
     return (
+        <>
+
         <div className="fixed h-20 top-0 right-0 z-1005 w-full pt-1">
             <header className="flex items-center justify-center w-full h-full pt-0.5 bg-gradient-to-r from-[rgba(97,192,191,.208)] to-[rgba(255,182,185,.208)] backdrop-blur-md">
                 <div className="relative h-full w-[80%] flex items-center justify-between text-[#323739] font-navbar">
@@ -48,5 +50,7 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-        </div>)
+            </div>
+        </>
+    )
 }

@@ -1,10 +1,10 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ProgressBar from "@/components/progressBar";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
